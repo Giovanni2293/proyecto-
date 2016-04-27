@@ -1,0 +1,25 @@
+
+Colocar path del apache 
+
+set JAVA_HOME=C:\ "top level directory of your java install"
+set CATALINA_HOME=C:\ "top level directory of your Tomcat install"
+set PATH=%PATH%;%JAVA_HOME%\bin;%CATALINA_HOME%\bin
+
+Windows
+
+To Start server: <Tomcat Root>/bin>startup.bat
+To Stop server: <Tomcat Root>/bin>shutdown.bat
+
+Mac/Linux/Unix (if you have downloaded binaries as .zip)
+
+To Start server: <Tomcat Root>/bin>startup.sh
+To Stop server: <Tomcat Root>/bin>shutdown.sh
+
+INSTALACION DE MAVEN CON LAS VARIABLES DE ENTORNO:
+
+http://www.mkyong.com/maven/how-to-install-maven-in-windows/
+
+Compilar proyecto maven:
+
+mvn clean install
+
