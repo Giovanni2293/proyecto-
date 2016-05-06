@@ -1,0 +1,6 @@
+{
+	distancia:[
+			ruta1: {nombre:"p10",latitud:"7.137122",longitud:"-73.122250"},
+			ruta2: {nombre:"p3",latitud:"7.136903",longitud:"-73.120218"}
+		  ]
+}

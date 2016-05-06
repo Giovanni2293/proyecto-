@@ -1,35 +1,91 @@
+
+//Buffers para lectura del contenido de fichero.
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+//import javax.print.attribute.standard.Media;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
- 
-@Path("/p10")
+import javax.ws.rs.core.Response;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
+
+import java.lang.Math;
+
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+@Path("/")
 public class Ruta {
 	private String ruta;
-	@GET
-	@Produces("application/xml")
-	public String r() {
- 
-		String stop1,stop2,coordenadas;
-		stop1="N102S030 ";
-		stop2="N20S2000 ";
-		coordenadas=stop1+stop2;
-		Double fahrenheit;
-		Double celsius = 36.8;
-		fahrenheit = ((celsius * 9) / 5) + 32;
-        ruta=coordenadas;
-		String result = "@Produces(\"application/xml\") Output: \n\nCoordenadas de la ruta Output: \n\n" + coordenadas;
-		return "<p10>" + "<p10output>" + result + "</p10output>" + "</p10>";
+
+	@Path("/distR")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public JSONObject calcularDistancia(InputStream incomingData) {
+
+		String datos = leerArchivo(incomingData);//lee el json que envian y genera un string
+		JSONObject j = stringToJson(datos); //convierte el string a json
+		calcular(j);//duda??
+		return null;
 	}
- 
-	@Path("{c}")
+
+	@Path("/posicion")
 	@GET
-	@Produces("application/xml")
-	public String añadir(@PathParam("c") String c) {
-        String stop1;
-		stop1="N102S030 ";
-        ruta=c+" "+ stop1;
-		String result = "@Produces(\"application/xml\") Output: \n\n Coordenada añadida Output: \n\n" + c + "Ruta actualizada: "+ ruta;
-		return "<añadirS>"+ "<añadirSoutput>" + result + "</añadirSoutput>" + "</añadirS>";
+	@Produces("application/json")
+	public String asda() {
+		String result = "{" + "nombre:\"Luis\"" + "}";
+		return result;
 	}
+
+	private double calcular(JSONObject entrada) {
+		/*JSONObject ruta1,ruta2;
+		JSONArray rutas = new JSONArray();
+		rutas=entrada.getJSONArray("distancia");
+		ruta1=rutas.getJSONObject(0);
+		ruta2=rutas.getJSONObject(1);
+		double lat1=ruta1.getDouble("latitud");
+		double lng1=ruta1.getDouble("longitud");
+		System.out.println(lat1);
+		System.out.println(lng1);
+		double lat2;
+		double lng2;
+		double radioTierra = 6371;// en kilómetros
+		double dLat = Math.toRadians(lat2 - lat1);
+		double dLng = Math.toRadians(lng2 - lng1);
+		double sindLat = Math.sin(dLat / 2);
+		double sindLng = Math.sin(dLng / 2);
+		double va1 = Math.pow(sindLat, 2)
+				+ Math.pow(sindLng, 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
+		double distancia = radioTierra * va2;*/
+		return 0;
+	}
+
+	private String leerArchivo(InputStream incomingData) {
+		StringBuilder constructor = new StringBuilder();
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(incomingData));
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				constructor.append(line);
+				constructor.append("\n");
+			}
+		} catch (Exception e) {
+			System.out.println("Error Parsing: - ");
+		}
+		return constructor.toString();
+	}
+    private JSONObject stringToJson(String entrada)
+    {
+    	JSONObject objeto = new JSONObject(entrada);
+    	return objeto;
+    }
 }
